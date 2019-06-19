@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 # Changelog
+=======
+# 1.17.0
+
+[diff](https://github.com/prettier/prettier/compare/1.16.2...1.17.0)
+
+🔗 [Release Notes](https://prettier.io/blog/2019/04/12/1.17.0.html)
+
+# 1.16.4
+>>>>>>> 8e0a160dfc30c5f170faca7f33d684700f8456ad
 
 <!-- --
 To get recent changes on prettierx (TBD brodybits/prettierx) in a nice format:
