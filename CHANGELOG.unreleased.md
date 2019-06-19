@@ -42,6 +42,75 @@ Examples:
 
 -->
 
+- Config: Support shared configurations ([#5963] by [@azz])
+
+  Sharing a Prettier configuration is simple: just publish a module that exports a configuration object, say `@company/prettier-config`, and reference it in your `package.json`:
+
+  ```json
+  {
+    "name": "my-cool-library",
+    "version": "9000.0.1",
+    "prettier": "@company/prettier-config"
+  }
+  ```
+
+  If you don't want to use `package.json`, you can use any of the supported extensions to export a string, e.g. `.prettierrc.json`:
+
+  ```json
+  "@company/prettier-config"
+  ```
+
+  An example configuration repository is available [here](https://github.com/azz/prettier-config).
+
+  > Note: This method does **not** offer a way to _extend_ the configuration to overwrite some properties from the shared configuration. If you need to do that, import the file in a `.prettierrc.js` file and export the modifications, e.g:
+  >
+  > ```js
+  > module.exports = {
+  >   ...require("@company/prettier-config"),
+  >   semi: false
+  > };
+  > ```
+
+- JavaScript: Add an option to modify when Prettier quotes object properties ([#5934] by [@azz])
+  **`--quote-props <as-needed|preserve|consistent>`**
+
+  `as-needed` **(default)** - Only add quotes around object properties where required. Current behaviour.
+  `preserve` - Respect the input. This is useful for users of Google's Closure Compiler in Advanced Mode, which treats quoted properties differently.
+  `consistent` - If _at least one_ property in an object requires quotes, quote all properties - this is like ESLint's [`consistent-as-needed`](https://eslint.org/docs/rules/quote-props) option.
+
+  <!-- prettier-ignore -->
+  ```js
+  // Input
+  const headers = {
+    accept: "application/json",
+    "content-type": "application/json",
+    "origin": "prettier.io"
+  };
+
+  // Output --quote-props=as-needed
+  const headers = {
+    accept: "application/json",
+    "content-type": "application/json",
+    origin: "prettier.io"
+  };
+
+  // Output --quote-props=consistent
+  const headers = {
+    "accept": "application/json",
+    "content-type": "application/json",
+    "origin": "prettier.io"
+  };
+
+  // Output --quote-props=preserve
+  const headers = {
+    accept: "application/json",
+    "content-type": "application/json",
+    "origin": "prettier.io"
+  };
+  ```
+
+- CLI: Honor stdin-filepath when outputting error messages.
+
 - Markdown: Do not align table contents if it exceeds the print width and `--prose-wrap never` is set ([#5701] by [@chenshuai2144])
 
   The aligned table is less readable than the compact one
@@ -83,4 +152,41 @@ Examples:
 
   // Output (Prettier master)
   <my-element data-for={value}></my-element>
+  ```
+
+- JavaScript: Fix parens logic for optional chaining expressions and closure type casts ([#5843] by [@yangsu])
+
+  Logic introduced in #4542 will print parens in the wrong places and produce invalid code for optional chaining expressions (with more than 2 nodes) or closure type casts that end in function calls.
+
+  <!-- prettier-ignore -->
+  ```js
+  // Input
+  (a?.b[c]).c();
+  let value = /** @type {string} */ (this.members[0]).functionCall();
+
+  // Output (Prettier stable)
+  a(?.b[c]).c();
+  let value = /** @type {string} */ this(.members[0]).functionCall();
+
+  // Output (Prettier master)
+  (a?.b[c]).c();
+  let value = /** @type {string} */ (this.members[0]).functionCall();
+  ```
+
+- CLI: Plugins published as a scoped NPM package (e.g.: `@name/prettier-plugin-foo`) are now automatically registered ([#5945] by [@Kocal])
+
+- Angular: Don't add unnecessary parentheses to pipes ([#5929] by [@voithos])
+
+  In some cases, wrapping parentheses were being added to certain pipes inside attributes, but they are no longer added when they don't affect the result of the expression.
+
+  <!-- prettier-ignore -->
+  ```html
+  // Input
+  <div *ngIf="isRendered | async"></div>
+
+  // Output (Prettier stable)
+  <div *ngIf="(isRendered | async)"></div>
+
+  // Output (Prettier master)
+  <div *ngIf="isRendered | async"></div>
   ```
