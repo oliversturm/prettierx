@@ -4298,10 +4298,15 @@ function printArgumentsList(path, options, print) {
 
     const somePrintedArgumentsWillBreak = printedArguments.some(willBreak);
 
+    const simpleConcat = concat(["(", concat(printedExpanded), ")"]);
+
     return concat([
       somePrintedArgumentsWillBreak ? breakParent : "",
       conditionalGroup(
         [
+          // XXX TBD ???:
+          options.parenSpacing ?
+          // <<<<<<< HEAD
           concat([
             ifBreak(
               indent(concat(["(", parenLine, concat(printedExpanded)])),
@@ -4316,7 +4321,12 @@ function printArgumentsList(path, options, print) {
               ? ""
               : parenSpace,
             ")"
-          ]),
+          ]) :
+          // =======
+          !somePrintedArgumentsWillBreak
+            ? simpleConcat
+            : ifBreak(allArgsBrokenOut(), simpleConcat),
+          // >>>>>>> e8037ff25009609ca741ce68f944c97d5fe23968
           shouldGroupFirst
             ? concat([
                 "(",
