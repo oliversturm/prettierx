@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Changelog
 
 <!-- --
@@ -13,6 +14,15 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
 [compare prettierx-0.7.0...prettierx-0.7.1](https://github.com/brodybits/prettierx/compare/prettierx-0.7.0...prettierx-0.7.1)
 
 ### prettier 1.17.1
+=======
+# 1.18.0
+
+[diff](https://github.com/prettier/prettier/compare/1.17.1...1.18.0)
+
+🔗 [Release Notes](https://prettier.io/blog/2019/06/06/1.18.0.html)
+
+# 1.17.1
+>>>>>>> eec62928519898ff2b51f008ab27a3049feb5a16
 
 [diff](https://github.com/prettier/prettier/compare/1.17.0...1.17.1)
 
@@ -27,7 +37,7 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
     }
   }
 
-  // Output (Prettier stable run with --range-start 30 --range-end 110)
+  // Output (Prettier 1.17.0 run with --range-start 30 --range-end 110)
   function f() {
     if (true) {
       call(
@@ -39,14 +49,14 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
     }
   }
 
-  // Output (Prettier stable run without range)
+  // Output (Prettier 1.17.0 run without range)
   function f() {
     if (true) {
       call("this line is 79 chars", "long", "it should", "stay as single line");
     }
   }
 
-  // Output (Prettier master with and without range)
+  // Output (Prettier 1.17.1 with and without range)
   function f() {
     if (true) {
       call("this line is 79 chars", "long", "it should", "stay as single line");
@@ -64,11 +74,11 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
   test(/** @type {!Array} */(arrOrString).length);
   test(/** @type {!Array} */((arrOrString)).length + 1);
 
-  // Output (Prettier stable)
+  // Output (Prettier 1.17.0)
   test(/** @type {!Array} */ (arrOrString.length));
   test(/** @type {!Array} */ (arrOrString.length + 1));
 
-  // Output (Prettier master)
+  // Output (Prettier 1.17.1)
   test(/** @type {!Array} */ (arrOrString).length);
   test(/** @type {!Array} */ (arrOrString).length + 1);
   ```
@@ -82,12 +92,12 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
     var x = (await foo.bar.blah)?.hi;
   }
 
-  // Output (Prettier stable)
+  // Output (Prettier 1.17.0)
   async function myFunction() {
     var x = await foo.bar.blah?.hi;
   }
 
-  // Output (Prettier master)
+  // Output (Prettier 1.17.1)
   async function myFunction() {
     var x = (await foo.bar.blah)?.hi;
   }
@@ -107,7 +117,7 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
     e
   {{/if}}
 
-  // Output (Prettier stable)
+  // Output (Prettier 1.17.0)
   {{#if a}}
     a
   {{else if c}}
@@ -115,7 +125,7 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
   e
   {{/if}}
 
-  // Output (Prettier master)
+  // Output (Prettier 1.17.1)
   Code Sample
   {{#if a}}
     a
@@ -131,7 +141,7 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
 
   Previously, multiline closure compiler typecast comments with lines that
   start with \* weren't flagged correctly and the subsequent parenthesis were
-  stripped. Prettier master fixes this issue.
+  stripped. Prettier 1.17.1 fixes this issue.
 
   <!-- prettier-ignore -->
   ```js
@@ -144,7 +154,7 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
     width,
   });
 
-  // Output (Prettier stable)
+  // Output (Prettier 1.17.0)
   const style =/**
    * @type {{
    *   width: number,
@@ -153,7 +163,7 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
     width,
   };
 
-  // Output (Prettier master)
+  // Output (Prettier 1.17.1)
   const style =/**
    * @type {{
    *   width: number,
