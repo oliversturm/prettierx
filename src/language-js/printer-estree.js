@@ -2508,7 +2508,11 @@ function printPathNoParens(path, options, print, args) {
         }
       }
 
-      const isSimple = isSimpleTemplateLiteral(n);
+      // TBD .. .. ..
+      const isSimple = // .. .. ..
+        !options.alignTernaryLines && // .. .. ..
+        !options.spaceBeforeFunctionParen && // ..
+        isSimpleTemplateLiteral(n); // .. .. ..
       if (isSimple) {
         expressions = expressions.map(
           doc =>
@@ -2546,7 +2550,7 @@ function printPathNoParens(path, options, print, args) {
 
           let printed = expressions[i];
 
-          // XXX TBD ...:
+          // XXX TBD ... ...
           if (!isSimple) {
             // Breaks at the template element boundaries (${ and }) are preferred to breaking
             // in the middle of a MemberExpression
