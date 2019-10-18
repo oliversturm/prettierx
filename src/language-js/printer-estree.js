@@ -2641,15 +2641,22 @@ function printPathNoParens(path, options, print, args) {
 
           let printed = expressions[i];
 
-          if (
-            (n.expressions[i].comments && n.expressions[i].comments.length) ||
-            n.expressions[i].type === "MemberExpression" ||
-            n.expressions[i].type === "OptionalMemberExpression" ||
-            n.expressions[i].type === "ConditionalExpression"
-          ) {
-            printed = concat([indent(concat([parenLine, printed])), parenLine]);
-          } else {
-            printed = concat([parenSpace, printed, parenSpace]);
+          // FUTURE TBD
+          // if (...) {...}
+          {
+            if (
+              (n.expressions[i].comments && n.expressions[i].comments.length) ||
+              n.expressions[i].type === "MemberExpression" ||
+              n.expressions[i].type === "OptionalMemberExpression" ||
+              n.expressions[i].type === "ConditionalExpression"
+            ) {
+              printed = concat([
+                indent(concat([parenLine, printed])),
+                parenLine
+              ]);
+            } else {
+              printed = concat([parenSpace, printed, parenSpace]);
+            }
           }
 
           const aligned =
