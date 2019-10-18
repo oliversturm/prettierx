@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Changelog
 
 <!-- --
@@ -13,16 +12,13 @@ $ git log --pretty=format:"- %s" rev1..rev2 | sed 's/#\([0-9]*\)/\[prettier\/pre
 
 [compare prettierx-0.7.0...prettierx-0.7.1](https://github.com/brodybits/prettierx/compare/prettierx-0.7.0...prettierx-0.7.1)
 
-### prettier 1.17.1
-=======
-# 1.18.0
+### prettier 1.18.0
 
 [diff](https://github.com/prettier/prettier/compare/1.17.1...1.18.0)
 
 🔗 [Release Notes](https://prettier.io/blog/2019/06/06/1.18.0.html)
 
-# 1.17.1
->>>>>>> eec62928519898ff2b51f008ab27a3049feb5a16
+### prettier 1.17.1
 
 [diff](https://github.com/prettier/prettier/compare/1.17.0...1.17.1)
 
