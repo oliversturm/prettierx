@@ -4162,11 +4162,17 @@ function hasAddedLine(arg) {
   }
 }
 
+// oli
+//let printArgumentsListCall = 0;
+
 function printArgumentsList(path, options, print) {
   const parenSpace = options.parenSpacing ? " " : "";
   const parenLine = options.parenSpacing ? line : softline;
   const node = path.getValue();
   const args = node.arguments;
+  // oli
+  // const thisCall = ++printArgumentsListCall;
+  // console.log(`printArgumentsList (${thisCall}) with node `, node);
 
   if (args.length === 0) {
     return concat([
@@ -4185,6 +4191,8 @@ function printArgumentsList(path, options, print) {
     args[1].type === "ArrayExpression" &&
     !args.find(arg => arg.leadingComments || arg.trailingComments)
   ) {
+    // oli
+    // console.log(`returning (${thisCall}) concat (useEffect)`);
     return concat([
       "(",
       path.call(print, "arguments", 0),
@@ -4245,6 +4253,8 @@ function printArgumentsList(path, options, print) {
   // here, but not
   //    process.stdout.pipe(socket)
   if (isFunctionCompositionFunction(node.callee) && args.length > 1) {
+    // oli
+    //console.log(`returning (${thisCall}) allArgsBrokenOut`);
     return allArgsBrokenOut();
   }
 
@@ -4283,6 +4293,8 @@ function printArgumentsList(path, options, print) {
 
     const somePrintedArgumentsWillBreak = printedArguments.some(willBreak);
 
+    // oli
+    // console.log(`returning (${thisCall}) group (conditional)`);
     return concat([
       somePrintedArgumentsWillBreak ? breakParent : "",
       conditionalGroup(
@@ -4290,7 +4302,10 @@ function printArgumentsList(path, options, print) {
           concat([
             ifBreak(
               indent(concat(["(", parenLine, concat(printedExpanded)])),
-              concat(["(", parenSpace, concat(printedExpanded)])
+              //concat(["(", parenSpace, concat(printedExpanded)])
+              // oli - this works, but even the first argument to a named
+              // call is always broken round this way
+              indent(concat([hardline, "(", parenSpace, concat(printedExpanded)]))
             ),
             somePrintedArgumentsWillBreak
               ? concat([
@@ -4328,14 +4343,21 @@ function printArgumentsList(path, options, print) {
     ]);
   }
 
+  // oli
+  //console.log(`returning (${thisCall}) group (main)`);
+
+  // oli - changes in this block
   return group(
-    concat([
-      "(",
-      indent(concat([parenLine, concat(printedArguments)])),
-      ifBreak(maybeTrailingComma),
-      parenLine,
-      ")"
-    ]),
+    indent(
+      concat([
+        hardline,
+        "(",
+        indent(/*concat([parenLine,*/ concat(printedArguments) /*])*/),
+        ifBreak(maybeTrailingComma),
+        //parenLine,
+        ")"
+      ])
+    ),
     { shouldBreak: printedArguments.some(willBreak) || anyArgEmptyLine }
   );
 }
@@ -5068,6 +5090,8 @@ function printMemberChain(path, options, print) {
 
   function rec(path) {
     const node = path.getValue();
+    // oli
+    //console.warn("recursing with path value", node);
     if (
       (node.type === "CallExpression" ||
         node.type === "OptionalCallExpression") &&
@@ -5075,6 +5099,8 @@ function printMemberChain(path, options, print) {
         node.callee.type === "CallExpression" ||
         node.callee.type === "OptionalCallExpression")
     ) {
+      // oli
+      // console.warn("case 1");
       printedNodes.unshift({
         node: node,
         printed: concat([
@@ -5093,6 +5119,8 @@ function printMemberChain(path, options, print) {
       });
       path.call(callee => rec(callee), "callee");
     } else if (isMemberish(node)) {
+      // oli
+      // console.warn("case 2");
       printedNodes.unshift({
         node: node,
         needsParens: pathNeedsParens(path, options),
@@ -5114,6 +5142,9 @@ function printMemberChain(path, options, print) {
       });
       path.call(expression => rec(expression), "expression");
     } else {
+      // oli
+      // console.warn("case 3");
+
       printedNodes.unshift({
         node: node,
         printed: path.call(print)
